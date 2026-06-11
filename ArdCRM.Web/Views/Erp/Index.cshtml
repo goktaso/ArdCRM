@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "ERP Senkronizasyon";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0">ERP Senkronizasyon</h4>
+    <a asp-controller="Musteri" asp-action="Index" class="btn btn-sm btn-outline-secondary">← Müşterilere Dön</a>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light small fw-500">Netsis ERP'den Müşteri Aktar</div>
+            <div class="card-body">
+                <p class="text-muted small mb-3">
+                    ERP veritabanındaki cari hesapları önizleyerek ArdCRM'e aktarabilirsiniz.
+                    Mevcut müşteriler vergi numarasına göre eşleştirilir ve güncellenir.
+                    Yeni kayıtlar eklenir. Hiçbir veri ERP'ye yazılmaz.
+                </p>
+                <form asp-action="Onizle" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        ERP'yi Tara ve Önizle
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light small fw-500">Önemli Notlar</div>
+            <div class="card-body">
+                <ul class="small text-muted mb-0" style="padding-left:1.2rem">
+                    <li>ERP bağlantısı <strong>sadece okuma</strong> yapar.</li>
+                    <li>Eşleştirme kriteri: <strong>Vergi No</strong></li>
+                    <li>Vergi No'su eşleşen kayıtlar güncellenir.</li>
+                    <li>Yeni kayıtlar <strong>Aktif</strong> olarak eklenir.</li>
+                    <li>ERP bağlantısı için <code>appsettings.Work.json</code> içinde<br>
+                        <code>"NetsisConnection"</code> tanımlı olmalıdır.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

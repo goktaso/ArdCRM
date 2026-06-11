@@ -94,15 +94,22 @@ ArdCRM/
 - [x] DataProtection fix — key'ler proje klasöründe tutuluyor
 - [x] launchSettings — Work-Kestrel ve Home-Kestrel profilleri eklendi
 - [x] Tüm modüller test edildi, uygulama çalışıyor
-- [ ] Musteri detay sayfasında gerçek teklif listesi
-- [ ] Dashboard istatistik kartları (müşteri sayısı, açık teklif sayısı, toplam tutar)
-- [ ] Arama / filtreleme (müşteri listesinde)
-- [ ] Unit testler (ArdCRM.Tests)
+- [x] Musteri detay sayfasında gerçek teklif listesi + özet istatistikler
+- [x] Dashboard istatistik kartları (müşteri sayısı, açık teklif sayısı, toplam tutar)
+- [x] Arama / filtreleme — müşteri ve teklif listelerinde anlık JS filtre
+- [x] Teklif durum akışı — listeden tek tıkla durum değiştirme
+- [x] Unit testler — 27 test, 27 yeşil (Moq, xUnit)
+- [x] FluentValidation — MusteriValidator, TeklifValidator
+- [x] IErpAdapter + NetsisAdapter + NullErpAdapter
+- [x] ErpSenkronService — önizleme + aktarım
+- [x] ERP Senkron UI — ErpController, Index, Onizleme view
+- [x] ARD logosu navbar'a eklendi
+- [x] baslat.bat — tek tıkla uygulama başlatma
 
 ## Devam Edilecekler (WIP notu)
 > Her oturum kapanışında buraya not düş, bir sonraki oturumda okuyarak başla.
 
-Son bırakılan yer: Faz 3 tamamlandı — unit testler, FluentValidation, arama/filtreleme, teklif durum akışı.
+Son bırakılan yer: FAZ 4 TAMAMLANDI — tüm planlanmış adımlar bitti — unit testler, FluentValidation, arama/filtreleme, teklif durum akışı.
 Çalıştırma komutu (PowerShell):
   $env:ConnectionStrings__DefaultConnection="Server=OZAY\DATA;Database=ArdCRM;Trusted_Connection=True;TrustServerCertificate=True;"
   dotnet run --project ArdCRM.Web --launch-profile Work-Kestrel

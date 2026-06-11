@@ -1,0 +1,106 @@
+@model IEnumerable<ArdCRM.Core.Interfaces.ErpMusteri>
+@{
+    ViewData["Title"] = "ERP Önizleme";
+    var liste = Model.ToList();
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h4 class="mb-0">ERP Önizleme</h4>
+        <small class="text-muted">@liste.Count kayıt bulundu — aktarmak istediklerinizi seçin</small>
+    </div>
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary">← Geri</a>
+</div>
+
+@if (!liste.Any())
+{
+    <div class="alert alert-info">ERP'de aktarılacak müşteri bulunamadı.</div>
+}
+else
+{
+    <form asp-action="Aktar" method="post">
+        @Html.AntiForgeryToken()
+
+        <div class="row g-2 mb-3">
+            <div class="col-md-4">
+                <input type="text" id="erpAra" class="form-control form-control-sm" placeholder="Firma adı veya vergi no ara...">
+            </div>
+            <div class="col-auto">
+                <button type="button" onclick="tumunuSec(true)"  class="btn btn-sm btn-outline-primary">Tümünü Seç</button>
+                <button type="button" onclick="tumunuSec(false)" class="btn btn-sm btn-outline-secondary">Seçimi Kaldır</button>
+            </div>
+        </div>
+
+        <div class="table-responsive mb-3">
+            <table class="table table-hover align-middle table-sm">
+                <thead>
+                    <tr>
+                        <th style="width:40px"></th>
+                        <th>Cari Kodu</th>
+                        <th>Firma Adı</th>
+                        <th>Vergi No</th>
+                        <th>Şehir</th>
+                        <th>Telefon</th>
+                        <th>Durum</th>
+                    </tr>
+                </thead>
+                <tbody id="erpTablo">
+                    @foreach (var m in liste)
+                    {
+                        <tr class="erp-satir" data-ara="@m.CariAdi.ToLower() @(m.VergiNo ?? "")">
+                            <td>
+                                <input type="checkbox" name="secilenKodlar" value="@m.CariKod"
+                                       class="form-check-input erp-chk" checked>
+                            </td>
+                            <td><span class="font-monospace small">@m.CariKod</span></td>
+                            <td>@m.CariAdi</td>
+                            <td>@(m.VergiNo ?? "-")</td>
+                            <td>@(m.Sehir ?? "-")</td>
+                            <td>@(m.Telefon ?? "-")</td>
+                            <td>
+                                @if (m.Aktif)
+                                {
+                                    <span class="badge bg-success">Aktif</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Pasif</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex gap-2 align-items-center">
+            <button type="submit" class="btn btn-primary">
+                Seçilenleri Aktar
+            </button>
+            <span id="seciliSayi" class="text-muted small">@liste.Count kayıt seçili</span>
+        </div>
+    </form>
+}
+
+@section Scripts {
+<script>
+function tumunuSec(sec) {
+    document.querySelectorAll('.erp-chk').forEach(c => c.checked = sec);
+    sayiGuncelle();
+}
+
+function sayiGuncelle() {
+    const n = document.querySelectorAll('.erp-chk:checked').length;
+    document.getElementById('seciliSayi').textContent = n + ' kayıt seçili';
+}
+
+document.querySelectorAll('.erp-chk').forEach(c => c.addEventListener('change', sayiGuncelle));
+
+document.getElementById('erpAra').addEventListener('input', function() {
+    const ara = this.value.toLowerCase();
+    document.querySelectorAll('.erp-satir').forEach(s => {
+        s.style.display = !ara || s.dataset.ara.includes(ara) ? '' : 'none';
+    });
+});
+</script>
+}

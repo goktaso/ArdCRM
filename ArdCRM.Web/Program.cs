@@ -3,6 +3,8 @@ using ArdCRM.Core.Entities;
 using ArdCRM.Core.Interfaces;
 using ArdCRM.Data.Context;
 using ArdCRM.Data.Repositories;
+using ArdCRM.Data.Adapters;
+using ArdCRM.Core.Interfaces;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +32,14 @@ builder.Services.AddScoped<IRepository<Teklif>, GenericRepository<Teklif>>();
 // Servis kayıtları
 builder.Services.AddScoped<IMusteriService, MusteriService>();
 builder.Services.AddScoped<ITeklifService, TeklifService>();
+builder.Services.AddScoped<IErpSenkronService, ErpSenkronService>();
+
+// ERP Adapter — NetsisConnection tanımlıysa aktif, yoksa NullAdapter
+var netsisConn = builder.Configuration.GetConnectionString("NetsisConnection");
+if (!string.IsNullOrEmpty(netsisConn))
+    builder.Services.AddScoped<IErpAdapter>(_ => new NetsisAdapter(netsisConn));
+else
+    builder.Services.AddScoped<IErpAdapter, NullErpAdapter>();
 
 builder.Services.AddControllersWithViews();
 
