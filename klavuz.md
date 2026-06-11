@@ -286,12 +286,14 @@ dotnet ef database update \
 
 ## 10. Özet — Günlük 3 Dakika Kuralı
 
-### İşten/Evden ayrılırken — kopyala çalıştır:
+### İşten/Evden ayrılırken — her satırı ayrı çalıştır:
 ```powershell
 git add -A
-git commit -m "WIP: [ne bıraktığını buraya yaz]"
-git push origin dev
+git commit -m "WIP: ne biraktığını buraya yaz"
+git push origin main
 ```
+
+> ⚠️ PowerShell'de && çalışmaz — komutları ayrı satırlarda gir.
 
 ### Yeni makineye oturunca — kopyala çalıştır:
 ```powershell
