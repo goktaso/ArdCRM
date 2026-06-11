@@ -1,3 +1,4 @@
+using ArdCRM.Business.Validators;
 using ArdCRM.Core;
 using ArdCRM.Core.Entities;
 using ArdCRM.Core.Interfaces;
@@ -7,6 +8,7 @@ namespace ArdCRM.Business.Services;
 public class MusteriService : IMusteriService
 {
     private readonly IRepository<Musteri> _musteriRepo;
+    private readonly MusteriValidator _validator = new();
 
     public MusteriService(IRepository<Musteri> musteriRepo)
     {
@@ -24,15 +26,14 @@ public class MusteriService : IMusteriService
         var musteri = await _musteriRepo.GetByIdAsync(id);
         if (musteri is null)
             return ServiceResult<Musteri>.Fail($"Müşteri bulunamadı. (Id: {id})");
-
         return ServiceResult<Musteri>.Ok(musteri);
     }
 
     public async Task<ServiceResult<Musteri>> CreateAsync(Musteri musteri)
     {
-        var hatalar = Validate(musteri);
-        if (hatalar.Count > 0)
-            return ServiceResult<Musteri>.Fail(hatalar);
+        var validation = await _validator.ValidateAsync(musteri);
+        if (!validation.IsValid)
+            return ServiceResult<Musteri>.Fail(validation.Errors.Select(e => e.ErrorMessage).ToList());
 
         var kayit = await _musteriRepo.AddAsync(musteri);
         return ServiceResult<Musteri>.Ok(kayit, "Müşteri başarıyla oluşturuldu.");
@@ -43,9 +44,9 @@ public class MusteriService : IMusteriService
         if (!await _musteriRepo.ExistsAsync(musteri.Id))
             return ServiceResult<Musteri>.Fail("Güncellenecek müşteri bulunamadı.");
 
-        var hatalar = Validate(musteri);
-        if (hatalar.Count > 0)
-            return ServiceResult<Musteri>.Fail(hatalar);
+        var validation = await _validator.ValidateAsync(musteri);
+        if (!validation.IsValid)
+            return ServiceResult<Musteri>.Fail(validation.Errors.Select(e => e.ErrorMessage).ToList());
 
         var guncellenen = await _musteriRepo.UpdateAsync(musteri);
         return ServiceResult<Musteri>.Ok(guncellenen, "Müşteri güncellendi.");
@@ -58,15 +59,5 @@ public class MusteriService : IMusteriService
 
         await _musteriRepo.DeleteAsync(id);
         return ServiceResult.Ok("Müşteri silindi.");
-    }
-
-    private static List<string> Validate(Musteri m)
-    {
-        var hatalar = new List<string>();
-        if (string.IsNullOrWhiteSpace(m.Ad)) hatalar.Add("Ad alanı zorunludur.");
-        if (string.IsNullOrWhiteSpace(m.FirmaAdi)) hatalar.Add("Firma adı zorunludur.");
-        if (!string.IsNullOrWhiteSpace(m.Email) && !m.Email.Contains('@'))
-            hatalar.Add("Geçerli bir e-posta adresi giriniz.");
-        return hatalar;
     }
 }

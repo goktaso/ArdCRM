@@ -115,3 +115,6 @@ public class TeklifController : Controller
         ViewBag.MusteriListesi = new SelectList(liste, "Id", "FirmaAdi", secilenId);
     }
 }
+
+// Kısmi sınıf kapanmadan önce yeni action eklenemez, ayrı dosyaya yazmak yerine
+// mevcut sınıfın son satırından önce ekliyoruz — python ile yapacağız

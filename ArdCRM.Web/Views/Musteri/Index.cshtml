@@ -18,7 +18,28 @@
 }
 else
 {
-    <div class="table-responsive">
+    <div class="row g-2 mb-3">
+    <div class="col-md-5">
+        <input type="text" id="ara" class="form-control form-control-sm" placeholder="Firma adı veya kişi ara...">
+    </div>
+    <div class="col-md-3">
+        <select id="tipFiltre" class="form-select form-select-sm">
+            <option value="">Tüm tipler</option>
+            <option value="Potansiyel">Potansiyel</option>
+            <option value="Aktif">Aktif</option>
+            <option value="Pasif">Pasif</option>
+            <option value="VIP">VIP</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <input type="text" id="sehirFiltre" class="form-control form-control-sm" placeholder="Şehir...">
+    </div>
+    <div class="col-md-2">
+        <button onclick="filtreTemizle()" class="btn btn-sm btn-outline-secondary w-100">Temizle</button>
+    </div>
+</div>
+<div id="sonucSayisi" class="text-muted small mb-2"></div>
+<div class="table-responsive">
         <table class="table table-hover align-middle">
             <thead>
                 <tr>
@@ -33,7 +54,11 @@ else
             <tbody>
                 @foreach (var m in Model)
                 {
-                    <tr>
+                    <tr class="musteri-satir"
+                        data-firma="@m.FirmaAdi.ToLower()"
+                        data-ad="@m.TamAd.ToLower()"
+                        data-sehir="@(m.Sehir?.ToLower() ?? "")"
+                        data-tip="@m.Tip">
                         <td>
                             <div class="fw-500">@m.FirmaAdi</div>
                             <small class="text-muted">@m.TamAd</small>
@@ -67,5 +92,41 @@ else
             </tbody>
         </table>
     </div>
-    <small class="text-muted">Toplam @Model.Count() müşteri</small>
+    <small id="altSayi" class="text-muted">Toplam @Model.Count() müşteri</small>
+
+@section Scripts {
+<script>
+const satirlar = document.querySelectorAll(".musteri-satir");
+const toplamSayi = satirlar.length;
+
+function filtrele() {
+    const ara = document.getElementById("ara").value.toLowerCase();
+    const tip = document.getElementById("tipFiltre").value;
+    const sehir = document.getElementById("sehirFiltre").value.toLowerCase();
+    let gorunen = 0;
+    satirlar.forEach(s => {
+        const araEsles = !ara || s.dataset.firma.includes(ara) || s.dataset.ad.includes(ara);
+        const tipEsles = !tip || s.dataset.tip === tip;
+        const sehirEsles = !sehir || s.dataset.sehir.includes(sehir);
+        const goster = araEsles && tipEsles && sehirEsles;
+        s.style.display = goster ? "" : "none";
+        if (goster) gorunen++;
+    });
+    document.getElementById("sonucSayisi").textContent =
+        gorunen < toplamSayi ? gorunen + " / " + toplamSayi + " müşteri gösteriliyor" : "";
+    document.getElementById("altSayi").textContent = "Toplam " + toplamSayi + " müşteri";
+}
+
+function filtreTemizle() {
+    document.getElementById("ara").value = "";
+    document.getElementById("tipFiltre").value = "";
+    document.getElementById("sehirFiltre").value = "";
+    filtrele();
+}
+
+document.getElementById("ara").addEventListener("input", filtrele);
+document.getElementById("tipFiltre").addEventListener("change", filtrele);
+document.getElementById("sehirFiltre").addEventListener("input", filtrele);
+</script>
+}
 }

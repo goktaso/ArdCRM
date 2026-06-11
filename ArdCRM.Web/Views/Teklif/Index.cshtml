@@ -18,6 +18,26 @@
 }
 else
 {
+    <div class="row g-2 mb-3">
+        <div class="col-md-5">
+            <input type="text" id="ara" class="form-control form-control-sm" placeholder="Teklif no, başlık ara...">
+        </div>
+        <div class="col-md-3">
+            <select id="durumFiltre" class="form-select form-select-sm">
+                <option value="">Tüm durumlar</option>
+                <option value="Taslak">Taslak</option>
+                <option value="Gonderildi">Gönderildi</option>
+                <option value="Gorusuluyor">Görüşülüyor</option>
+                <option value="Onaylandi">Onaylandı</option>
+                <option value="Reddedildi">Reddedildi</option>
+                <option value="Iptal">İptal</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button onclick="filtreTemizle()" class="btn btn-sm btn-outline-secondary w-100">Temizle</button>
+        </div>
+    </div>
+    <div id="sonucSayisi" class="text-muted small mb-2"></div>
     <div class="table-responsive">
         <table class="table table-hover align-middle">
             <thead>
@@ -34,7 +54,7 @@ else
             <tbody>
                 @foreach (var t in Model)
                 {
-                    <tr>
+                    <tr class="teklif-satir" data-no="@t.TeklifNo.ToLower()" data-baslik="@t.Baslik.ToLower()" data-durum="@t.Durum.ToString()">
                         <td><span class="font-monospace small">@t.TeklifNo</span></td>
                         <td>@(t.Musteri?.FirmaAdi ?? "-")</td>
                         <td>@t.Baslik</td>
@@ -68,5 +88,36 @@ else
             </tbody>
         </table>
     </div>
-    <small class="text-muted">Toplam @Model.Count() teklif</small>
+    <small id="altSayi" class="text-muted">Toplam @Model.Count() teklif</small>
+
+@section Scripts {
+<script>
+const satirlar = document.querySelectorAll(".teklif-satir");
+const toplamSayi = satirlar.length;
+
+function filtrele() {
+    const ara = document.getElementById("ara").value.toLowerCase();
+    const durum = document.getElementById("durumFiltre").value;
+    let gorunen = 0;
+    satirlar.forEach(s => {
+        const araEsles = !ara || s.dataset.no.includes(ara) || s.dataset.baslik.includes(ara);
+        const durumEsles = !durum || s.dataset.durum === durum;
+        const goster = araEsles && durumEsles;
+        s.style.display = goster ? "" : "none";
+        if (goster) gorunen++;
+    });
+    document.getElementById("sonucSayisi").textContent =
+        gorunen < toplamSayi ? gorunen + " / " + toplamSayi + " teklif gösteriliyor" : "";
+}
+
+function filtreTemizle() {
+    document.getElementById("ara").value = "";
+    document.getElementById("durumFiltre").value = "";
+    filtrele();
+}
+
+document.getElementById("ara").addEventListener("input", filtrele);
+document.getElementById("durumFiltre").addEventListener("change", filtrele);
+</script>
+}
 }

@@ -102,7 +102,7 @@ ArdCRM/
 ## Devam Edilecekler (WIP notu)
 > Her oturum kapanışında buraya not düş, bir sonraki oturumda okuyarak başla.
 
-Son bırakılan yer: Tüm modüller çalışıyor — Müşteri ve Teklif CRUD tamamlandı.
+Son bırakılan yer: Faz 3 tamamlandı — unit testler, FluentValidation, arama/filtreleme, teklif durum akışı.
 Çalıştırma komutu (PowerShell):
   $env:ConnectionStrings__DefaultConnection="Server=OZAY\DATA;Database=ArdCRM;Trusted_Connection=True;TrustServerCertificate=True;"
   dotnet run --project ArdCRM.Web --launch-profile Work-Kestrel
