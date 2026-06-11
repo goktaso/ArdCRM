@@ -178,29 +178,61 @@ CLAUDE.md'yi oku ve kaldığımız yerden devam edelim.
 
 ---
 
-## 6. Yeni Makineye Kurulum (SETUP.md özeti)
+## 6. Yeni Makineye Kurulum
 
-Yeni bir bilgisayarda projeye başlarken:
-
-```bash
-# 1. Repoyu klonla
-git clone https://github.com/goktaso/ArdCRM.git
-cd ArdCRM
-
-# 2. Ortam dosyasını oluştur (gitignore'da, elle yazılır)
-# appsettings.Work.json VEYA appsettings.Home.json oluştur
-# Connection string'i yaz
-
-# 3. Veritabanını oluştur
-dotnet ef database update --project ArdCRM.Data --startup-project ArdCRM.Web
-
-# 4. Build al
-dotnet build ArdCRM.sln
-
-# 5. VS'de doğru profili seç (Work veya Home) ve IIS Express başlat
+### Repo bilgisi
+```
+GitHub : https://github.com/goktaso/ArdCRM.git
+Branch : main (kararlı) / dev (aktif geliştirme)
 ```
 
-> dotnet run KULLANMA. Her zaman VS içinden IIS Express ile çalıştır.
+### Adım 1 — Repoyu klonla
+```powershell
+git clone https://github.com/goktaso/ArdCRM.git
+cd ArdCRM
+git checkout dev
+```
+
+### Adım 2 — Ortam dosyasını oluştur (makineye göre seç)
+
+**İş makinesi → `ArdCRM.Web\appsettings.Work.json` oluştur:**
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=OZAY\\DATA;Database=ArdCRM;Trusted_Connection=True;TrustServerCertificate=True;"
+  }
+}
+```
+
+**Ev makinesi → `ArdCRM.Web\appsettings.Home.json` oluştur:**
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=ARDA\\ARDA;Database=ArdCRM;Trusted_Connection=True;TrustServerCertificate=True;"
+  }
+}
+```
+
+> Bu dosyalar .gitignore'dadır. Her makinede bir kez elle oluşturulur, bir daha dokunmana gerek yok.
+
+### Adım 3 — Veritabanını oluştur
+```powershell
+dotnet ef database update --project ArdCRM.Data --startup-project ArdCRM.Web
+```
+
+Hata alırsan `docs\migrations\` klasöründeki SQL dosyalarını sırayla SSMS'de çalıştır.
+
+### Adım 4 — Build al
+```powershell
+dotnet build ArdCRM.sln
+```
+
+### Adım 5 — Çalıştır
+Visual Studio'da:
+- Üst menüde profil seçici → **Work** veya **Home** seç
+- **IIS Express** butonu ile başlat
+
+> ⚠️ `dotnet run` KULLANMA. Her zaman VS içinden IIS Express ile çalıştır.
 
 ---
 
@@ -254,12 +286,24 @@ dotnet ef database update \
 
 ## 10. Özet — Günlük 3 Dakika Kuralı
 
-```
-İşten çıkarken:     git add -A && git commit -m "WIP: ..." && git push
-Eve gelince:        git pull → VS aç → CLAUDE.md oku → devam et
-Evden işe gelince:  git add -A && git commit -m "WIP: ..." && git push
-İş yerine gelince:  git pull → VS aç → CLAUDE.md oku → devam et
+### İşten/Evden ayrılırken — kopyala çalıştır:
+```powershell
+git add -A
+git commit -m "WIP: [ne bıraktığını buraya yaz]"
+git push origin dev
 ```
 
-Bu 3 dakikayı atlama. Atlarsan ertesi gün nereden kaldığını bulmak
-30 dakika alır.
+### Yeni makineye oturunca — kopyala çalıştır:
+```powershell
+git pull origin dev
+```
+Sonra VS'i aç, `CLAUDE.md`'yi oku, Claude Code'a şunu yaz:
+```
+CLAUDE.md'yi oku ve kaldığımız yerden devam edelim.
+```
+
+---
+
+> Bu 3 dakikayı atlama. Atlarsan ertesi gün nereden kaldığını bulmak 30 dakika alır.
+>
+> Yarım kod commit etmek normaldir. `WIP:` prefix'i tam da bunun için var.
