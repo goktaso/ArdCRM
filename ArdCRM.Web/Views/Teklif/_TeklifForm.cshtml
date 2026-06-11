@@ -1,0 +1,51 @@
+@model ArdCRM.Core.Entities.Teklif
+@using ArdCRM.Core.Enums
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="MusteriId" class="form-label">Müşteri <span class="text-danger">*</span></label>
+        <select asp-for="MusteriId" class="form-select" asp-items="ViewBag.MusteriListesi">
+            <option value="">-- Müşteri Seçin --</option>
+        </select>
+        <span asp-validation-for="MusteriId" class="text-danger small"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Baslik" class="form-label">Başlık <span class="text-danger">*</span></label>
+        <input asp-for="Baslik" class="form-control" placeholder="Teklif konusu..." />
+        <span asp-validation-for="Baslik" class="text-danger small"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Tutar" class="form-label">Tutar <span class="text-danger">*</span></label>
+        <input asp-for="Tutar" class="form-control" type="number" step="0.01" min="0" placeholder="0.00" />
+        <span asp-validation-for="Tutar" class="text-danger small"></span>
+    </div>
+    <div class="col-md-2">
+        <label asp-for="Para" class="form-label">Para Birimi</label>
+        <select asp-for="Para" class="form-select">
+            <option value="TRY">TRY ₺</option>
+            <option value="USD">USD $</option>
+            <option value="EUR">EUR €</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="TeklifTarihi" class="form-label">Teklif Tarihi</label>
+        <input asp-for="TeklifTarihi" class="form-control" type="date" />
+    </div>
+    <div class="col-md-3">
+        <label asp-for="GecerlilikTarihi" class="form-label">Geçerlilik Tarihi</label>
+        <input asp-for="GecerlilikTarihi" class="form-control" type="date" />
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Durum" class="form-label">Durum</label>
+        <select asp-for="Durum" class="form-select"
+                asp-items="Html.GetEnumSelectList<TeklifDurumu>()"></select>
+    </div>
+    <div class="col-12">
+        <label asp-for="Aciklama" class="form-label">Açıklama</label>
+        <textarea asp-for="Aciklama" class="form-control" rows="3" placeholder="Teklif detayları..."></textarea>
+    </div>
+    <div class="col-12">
+        <label asp-for="Notlar" class="form-label">Notlar</label>
+        <textarea asp-for="Notlar" class="form-control" rows="2" placeholder="İç notlar..."></textarea>
+    </div>
+</div>

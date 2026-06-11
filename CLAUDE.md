@@ -75,20 +75,35 @@ ArdCRM/
 > Bu bölümü her önemli adımdan sonra güncelle.
 
 - [x] Proje yapısı oluşturuldu
-- [ ] DbContext ve bağlantı konfigürasyonu
-- [ ] Musteri entity + repository
-- [ ] MusteriService (ServiceResult<T>)
-- [ ] MusteriController + Views (Liste, Detay, Ekle, Düzenle)
-- [ ] Teklif modülü
-- [ ] Netsis adapter (opsiyonel)
+- [x] 4 katman + Tests projesi — solution'a eklendi, referanslar bağlandı
+- [x] ServiceResult / ServiceResult<T> — Core katmanı
+- [x] BaseEntity, Musteri, Teklif entity'leri
+- [x] MusteriTipi, TeklifDurumu enum'ları
+- [x] IRepository<T>, IMusteriService, ITeklifService interface'leri
+- [x] ArdCrmDbContext (EF Core)
+- [x] GenericRepository<T>
+- [x] MusteriService, TeklifService
+- [x] Program.cs — DI kayıtları
+- [x] MusteriController (Index, Detay, Ekle, Duzenle, Sil)
+- [x] Musteri View'ları — Index, Detay, Ekle, Duzenle, _MusteriForm partial
+- [x] _Layout.cshtml — Türkçe, navigasyon, TempData alert'leri
+- [x] Home/Index.cshtml — dashboard kartları
+- [x] docs/migrations/001_InitialCreate.sql
+- [ ] EF Core migration çalıştır → dotnet ef migrations add InitialCreate
+- [ ] dotnet ef database update → veritabanı oluştur
+- [ ] TeklifController + View'ları
 
 ## Devam Edilecekler (WIP notu)
 > Her oturum kapanışında buraya not düş, bir sonraki oturumda okuyarak başla.
 
-<!-- ÖRNEK:
-Son bırakılan yer: MusteriService.GetAll() metodu yazıldı,
-unit test eksik. Sonraki adım: MusteriControllerTest.
--->
+Son bırakılan yer: Tüm Musteri view'ları tamamlandı, migration SQL yazıldı.
+Sonraki adım:
+1. Dosyaları D:\C#\ArdCRM\ altına kopyala, git push at
+2. appsettings.Work.json oluştur (connection string)
+3. VS'de Work profili seç → IIS Express başlat
+4. SSMS'de 001_InitialCreate.sql çalıştır (veya dotnet ef database update)
+5. Uygulamayı test et: /Musteri → liste, ekle, düzenle, sil
+6. Sonraki oturumda: TeklifController + View'ları
 
 ## Sık Kullanılan Komutlar
 ```bash

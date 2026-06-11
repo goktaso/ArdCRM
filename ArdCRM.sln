@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArdCRM.Core", "ArdCRM.Core\ArdCRM.Core.csproj", "{6FC55270-1533-4BBD-B83A-7E0D738DC3F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArdCRM.Data", "ArdCRM.Data\ArdCRM.Data.csproj", "{CE25AA87-6337-42EE-BB91-A4AA76CA9C04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArdCRM.Business", "ArdCRM.Business\ArdCRM.Business.csproj", "{D678BD39-F571-429D-AC87-3E3DC038505D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArdCRM.Web", "ArdCRM.Web\ArdCRM.Web.csproj", "{3C135E20-EE25-48AC-AA95-BB421E943368}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArdCRM.Tests", "ArdCRM.Tests\ArdCRM.Tests.csproj", "{CC7C7743-8E1D-4023-A7E2-769A21F1AE59}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FC55270-1533-4BBD-B83A-7E0D738DC3F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FC55270-1533-4BBD-B83A-7E0D738DC3F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FC55270-1533-4BBD-B83A-7E0D738DC3F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FC55270-1533-4BBD-B83A-7E0D738DC3F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE25AA87-6337-42EE-BB91-A4AA76CA9C04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE25AA87-6337-42EE-BB91-A4AA76CA9C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE25AA87-6337-42EE-BB91-A4AA76CA9C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE25AA87-6337-42EE-BB91-A4AA76CA9C04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D678BD39-F571-429D-AC87-3E3DC038505D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D678BD39-F571-429D-AC87-3E3DC038505D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D678BD39-F571-429D-AC87-3E3DC038505D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D678BD39-F571-429D-AC87-3E3DC038505D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C135E20-EE25-48AC-AA95-BB421E943368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C135E20-EE25-48AC-AA95-BB421E943368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C135E20-EE25-48AC-AA95-BB421E943368}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C135E20-EE25-48AC-AA95-BB421E943368}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC7C7743-8E1D-4023-A7E2-769A21F1AE59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC7C7743-8E1D-4023-A7E2-769A21F1AE59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC7C7743-8E1D-4023-A7E2-769A21F1AE59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC7C7743-8E1D-4023-A7E2-769A21F1AE59}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

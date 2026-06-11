@@ -1,0 +1,71 @@
+@model IEnumerable<ArdCRM.Core.Entities.Musteri>
+@using ArdCRM.Core.Enums
+@{
+    ViewData["Title"] = "Müşteriler";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Müşteriler</h4>
+    <a asp-action="Ekle" class="btn btn-sm btn-primary">+ Yeni Müşteri</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="text-center text-muted py-5">
+        <p>Henüz müşteri eklenmemiş.</p>
+        <a asp-action="Ekle" class="btn btn-outline-primary btn-sm">İlk müşteriyi ekle</a>
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Firma / Ad</th>
+                    <th>Telefon</th>
+                    <th>E-posta</th>
+                    <th>Şehir</th>
+                    <th>Tip</th>
+                    <th class="text-end">İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var m in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="fw-500">@m.FirmaAdi</div>
+                            <small class="text-muted">@m.TamAd</small>
+                        </td>
+                        <td>@(m.Telefon ?? "-")</td>
+                        <td>@(m.Email ?? "-")</td>
+                        <td>@(m.Sehir ?? "-")</td>
+                        <td>
+                            @{
+                                var (badgeClass, label) = m.Tip switch
+                                {
+                                    MusteriTipi.Aktif       => ("success", "Aktif"),
+                                    MusteriTipi.Pasif       => ("secondary", "Pasif"),
+                                    MusteriTipi.VIP         => ("warning text-dark", "VIP"),
+                                    _                       => ("info text-dark", "Potansiyel")
+                                };
+                            }
+                            <span class="badge bg-@badgeClass">@label</span>
+                        </td>
+                        <td class="text-end">
+                            <a asp-action="Detay" asp-route-id="@m.Id" class="btn btn-outline-secondary btn-sm">Detay</a>
+                            <a asp-action="Duzenle" asp-route-id="@m.Id" class="btn btn-outline-primary btn-sm">Düzenle</a>
+                            <form asp-action="Sil" asp-route-id="@m.Id" method="post" class="d-inline"
+                                  onsubmit="return confirm('@m.FirmaAdi silinecek. Emin misiniz?')">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Sil</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <small class="text-muted">Toplam @Model.Count() müşteri</small>
+}

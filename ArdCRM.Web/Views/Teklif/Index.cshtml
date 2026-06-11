@@ -1,0 +1,72 @@
+@model IEnumerable<ArdCRM.Core.Entities.Teklif>
+@using ArdCRM.Core.Enums
+@{
+    ViewData["Title"] = "Teklifler";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Teklifler</h4>
+    <a asp-action="Ekle" class="btn btn-sm btn-primary">+ Yeni Teklif</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="text-center text-muted py-5">
+        <p>Henüz teklif oluşturulmamış.</p>
+        <a asp-action="Ekle" class="btn btn-outline-primary btn-sm">İlk teklifi oluştur</a>
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Teklif No</th>
+                    <th>Müşteri</th>
+                    <th>Başlık</th>
+                    <th class="text-end">Tutar</th>
+                    <th>Tarih</th>
+                    <th>Durum</th>
+                    <th class="text-end">İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var t in Model)
+                {
+                    <tr>
+                        <td><span class="font-monospace small">@t.TeklifNo</span></td>
+                        <td>@(t.Musteri?.FirmaAdi ?? "-")</td>
+                        <td>@t.Baslik</td>
+                        <td class="text-end">@t.Tutar.ToString("N2") @t.Para</td>
+                        <td>@t.TeklifTarihi.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            @{
+                                var (badgeClass, durumLabel) = t.Durum switch
+                                {
+                                    TeklifDurumu.Onaylandi   => ("success",          "Onaylandı"),
+                                    TeklifDurumu.Reddedildi  => ("danger",           "Reddedildi"),
+                                    TeklifDurumu.Gonderildi  => ("primary",          "Gönderildi"),
+                                    TeklifDurumu.Gorusuluyor => ("info text-dark",   "Görüşülüyor"),
+                                    TeklifDurumu.Iptal       => ("secondary",        "İptal"),
+                                    _                        => ("light text-dark",  "Taslak")
+                                };
+                            }
+                            <span class="badge bg-@badgeClass">@durumLabel</span>
+                        </td>
+                        <td class="text-end">
+                            <a asp-action="Detay"   asp-route-id="@t.Id" class="btn btn-outline-secondary btn-sm">Detay</a>
+                            <a asp-action="Duzenle" asp-route-id="@t.Id" class="btn btn-outline-primary btn-sm">Düzenle</a>
+                            <form asp-action="Sil"  asp-route-id="@t.Id" method="post" class="d-inline"
+                                  onsubmit="return confirm('@t.TeklifNo nolu teklif silinecek. Emin misiniz?')">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Sil</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <small class="text-muted">Toplam @Model.Count() teklif</small>
+}

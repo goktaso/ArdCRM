@@ -41,3 +41,6 @@ logs/
 # docs/
 # docs/migrations/
 # appsettings.json  (boş template)
+
+# DataProtection keys (makineye özel)
+DataProtection-Keys/

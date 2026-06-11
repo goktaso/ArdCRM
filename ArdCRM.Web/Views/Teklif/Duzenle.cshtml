@@ -1,0 +1,39 @@
+@model ArdCRM.Core.Entities.Teklif
+@{
+    ViewData["Title"] = "Teklif Düzenle";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Teklif Düzenle — <span class="text-muted font-monospace small">@Model.TeklifNo</span></h4>
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary">← Listeye Dön</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form asp-action="Duzenle" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="TeklifNo" />
+            <input type="hidden" asp-for="OlusturmaTarihi" />
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach (var hata in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <li>@hata.ErrorMessage</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            @await Html.PartialAsync("_TeklifForm", Model)
+
+            <div class="mt-4 d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Güncelle</button>
+                <a asp-action="Detay" asp-route-id="@Model.Id" class="btn btn-outline-secondary">İptal</a>
+            </div>
+        </form>
+    </div>
+</div>

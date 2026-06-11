@@ -1,0 +1,37 @@
+@model ArdCRM.Core.Entities.Musteri
+@{
+    ViewData["Title"] = "Yeni Müşteri";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Yeni Müşteri</h4>
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary">← Listeye Dön</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form asp-action="Ekle" method="post">
+            @Html.AntiForgeryToken()
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach (var hata in ViewData.ModelState.Values
+                            .SelectMany(v => v.Errors))
+                        {
+                            <li>@hata.ErrorMessage</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            @await Html.PartialAsync("_MusteriForm", Model)
+
+            <div class="mt-4 d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+            </div>
+        </form>
+    </div>
+</div>

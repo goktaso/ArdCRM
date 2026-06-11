@@ -1,0 +1,84 @@
+@model ArdCRM.Core.Entities.Teklif
+@using ArdCRM.Core.Enums
+@{
+    ViewData["Title"] = Model.TeklifNo;
+    var (badgeClass, durumLabel) = Model.Durum switch
+    {
+        TeklifDurumu.Onaylandi   => ("success",         "Onaylandı"),
+        TeklifDurumu.Reddedildi  => ("danger",          "Reddedildi"),
+        TeklifDurumu.Gonderildi  => ("primary",         "Gönderildi"),
+        TeklifDurumu.Gorusuluyor => ("info text-dark",  "Görüşülüyor"),
+        TeklifDurumu.Iptal       => ("secondary",       "İptal"),
+        _                        => ("light text-dark", "Taslak")
+    };
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h4 class="mb-0">@Model.Baslik</h4>
+        <span class="font-monospace text-muted small">@Model.TeklifNo</span>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-action="Duzenle" asp-route-id="@Model.Id" class="btn btn-sm btn-primary">Düzenle</a>
+        <a asp-action="Index" class="btn btn-sm btn-outline-secondary">← Liste</a>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-light small fw-500">Teklif Bilgileri</div>
+            <div class="card-body">
+                <table class="table table-sm table-borderless mb-0">
+                    <tr>
+                        <td class="text-muted" style="width:45%">Müşteri</td>
+                        <td>
+                            @if (Model.Musteri != null)
+                            {
+                                <a asp-controller="Musteri" asp-action="Detay" asp-route-id="@Model.MusteriId">
+                                    @Model.Musteri.FirmaAdi
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Tutar</td>
+                        <td class="fw-500">@Model.Tutar.ToString("N2") @Model.Para</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Durum</td>
+                        <td><span class="badge bg-@badgeClass">@durumLabel</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Teklif Tarihi</td>
+                        <td>@Model.TeklifTarihi.ToString("dd.MM.yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Geçerlilik</td>
+                        <td>@(Model.GecerlilikTarihi?.ToString("dd.MM.yyyy") ?? "-")</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-light small fw-500">Açıklama & Notlar</div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model.Aciklama))
+                {
+                    <p class="small mb-2">@Model.Aciklama</p>
+                }
+                @if (!string.IsNullOrEmpty(Model.Notlar))
+                {
+                    <hr class="my-2" />
+                    <p class="small text-muted mb-0">@Model.Notlar</p>
+                }
+                @if (string.IsNullOrEmpty(Model.Aciklama) && string.IsNullOrEmpty(Model.Notlar))
+                {
+                    <span class="text-muted small">Açıklama girilmemiş.</span>
+                }
+            </div>
+        </div>
+    </div>
+</div>
