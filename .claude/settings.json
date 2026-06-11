@@ -1,0 +1,27 @@
+{
+  "project": "ArdCRM",
+  "description": "ARD Sistem Danışmanlık — Müşteri/Cari Takip ve Teklif Yönetimi",
+  "developer": "Özay Göktaş (goktaso)",
+  "conventions": [
+    "4-layer architecture: Core / Data / Business / Web",
+    "ServiceResult<T> for all Business service returns",
+    "Generic Repository pattern (IRepository<T>)",
+    "No dotnet run — IIS Express or VS Debugger only",
+    "No hardcoded connection strings — appsettings + environment",
+    "ERP (Netsis/Logo) is READ-ONLY, never write",
+    "Sensitive data never sent to external cloud services",
+    "All migrations saved to docs/migrations/ as SQL scripts",
+    "Turkish UI labels, English code identifiers"
+  ],
+  "environments": {
+    "Work": "Server=OZAY\\DATA — appsettings.Work.json",
+    "Home": "Server=ARDA\\ARDA — appsettings.Home.json"
+  },
+  "stack": {
+    "framework": "ASP.NET Core 8 MVC",
+    "orm": "Entity Framework Core + Dapper (ERP okuma)",
+    "db": "SQL Server (Windows Authentication)",
+    "frontend": "Bootstrap 5 + Vanilla JS",
+    "test": "xUnit"
+  }
+}

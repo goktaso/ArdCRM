@@ -1,0 +1,43 @@
+# Ortam & bağlantı dosyaları (makineye özel)
+appsettings.Work.json
+appsettings.Home.json
+appsettings.Development.json
+appsettings.Production.json
+
+# Hassas veri
+**/seed_*.sql
+**/*_credentials*
+**/*_secrets*
+
+# Build çıktıları
+bin/
+obj/
+*.user
+
+# Visual Studio
+.vs/
+*.suo
+*.sln.docstates
+
+# Rider
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+.nuget/
+
+# Logs
+*.log
+logs/
+
+# GIT'E GİRMELİ (silme!)
+# CLAUDE.md
+# klavuz.md
+# .claude/settings.json
+# docs/
+# docs/migrations/
+# appsettings.json  (boş template)
