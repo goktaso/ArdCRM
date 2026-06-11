@@ -1,49 +1,160 @@
+@model ArdCRM.Web.Models.DashboardViewModel
+@using ArdCRM.Core.Enums
 @{
-    ViewData["Title"] = "Ana Sayfa";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="row g-4 mb-4">
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body d-flex align-items-center gap-3">
-                <div class="fs-1">👥</div>
-                <div>
-                    <div class="text-muted small">Müşteriler</div>
-                    <a asp-controller="Musteri" asp-action="Index" class="stretched-link text-decoration-none">
-                        <div class="fw-500">Müşteri Listesi</div>
-                    </a>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0">Dashboard</h4>
+    <small class="text-muted">@DateTime.Now.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"))</small>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100 border-start border-primary border-3">
+            <div class="card-body">
+                <div class="text-muted small mb-1">Toplam Müşteri</div>
+                <div class="fs-3 fw-bold">@Model.ToplamMusteri</div>
+                <div class="mt-2 d-flex gap-2 flex-wrap">
+                    <span class="badge bg-success">@Model.AktifMusteri Aktif</span>
+                    <span class="badge bg-info text-dark">@Model.PotansiyelMusteri Potansiyel</span>
+                    @if (Model.VipMusteri > 0)
+                    {
+                        <span class="badge bg-warning text-dark">@Model.VipMusteri VIP</span>
+                    }
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body d-flex align-items-center gap-3">
-                <div class="fs-1">📄</div>
-                <div>
-                    <div class="text-muted small">Teklifler</div>
-                    <a asp-controller="Teklif" asp-action="Index" class="stretched-link text-decoration-none">
-                        <div class="fw-500">Teklif Listesi</div>
-                    </a>
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100 border-start border-warning border-3">
+            <div class="card-body">
+                <div class="text-muted small mb-1">Açık Teklifler</div>
+                <div class="fs-3 fw-bold">@Model.AcikTeklif</div>
+                <div class="mt-2 d-flex gap-2 flex-wrap">
+                    <span class="badge bg-primary">@Model.BekleyenTeklif Bekliyor</span>
+                    <span class="badge bg-secondary">@Model.ToplamTeklif Toplam</span>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body d-flex align-items-center gap-3">
-                <div class="fs-1">➕</div>
-                <div>
-                    <div class="text-muted small">Hızlı Erişim</div>
-                    <a asp-controller="Musteri" asp-action="Ekle" class="stretched-link text-decoration-none">
-                        <div class="fw-500">Yeni Müşteri Ekle</div>
-                    </a>
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100 border-start border-success border-3">
+            <div class="card-body">
+                <div class="text-muted small mb-1">Onaylanan Teklifler</div>
+                <div class="fs-3 fw-bold">@Model.OnaylananTeklif</div>
+                <div class="mt-2">
+                    <span class="badge bg-success">%@Model.OnayOrani Onay Oranı</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm h-100 border-start border-danger border-3">
+            <div class="card-body">
+                <div class="text-muted small mb-1">Onaylanan Tutar</div>
+                <div class="fs-3 fw-bold">@Model.OnaylananTutar.ToString("N0") ₺</div>
+                <div class="mt-2">
+                    <span class="badge bg-warning text-dark">@Model.BekleyenTutar.ToString("N0") ₺ Bekliyor</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="text-muted small">
-    ARD CRM — ARD Sistem Danışmanlık
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <span class="small fw-500">Son Eklenen Müşteriler</span>
+                <a asp-controller="Musteri" asp-action="Index" class="btn btn-sm btn-outline-secondary">Tümü</a>
+            </div>
+            <div class="card-body p-0">
+                @if (!Model.SonMusteriler.Any())
+                {
+                    <div class="text-muted small p-3">Henüz müşteri yok.</div>
+                }
+                else
+                {
+                    <ul class="list-group list-group-flush">
+                        @foreach (var m in Model.SonMusteriler)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                                <div>
+                                    <div class="small fw-500">@m.FirmaAdi</div>
+                                    <div class="text-muted" style="font-size:11px">@m.OlusturmaTarihi.ToString("dd.MM.yyyy")</div>
+                                </div>
+                                @{
+                                    var (bc, lbl) = m.Tip switch {
+                                        MusteriTipi.Aktif        => ("success",          "Aktif"),
+                                        MusteriTipi.VIP          => ("warning text-dark", "VIP"),
+                                        MusteriTipi.Pasif        => ("secondary",         "Pasif"),
+                                        _                        => ("info text-dark",    "Potansiyel")
+                                    };
+                                }
+                                <span class="badge bg-@bc">@lbl</span>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <span class="small fw-500">Son Teklifler</span>
+                <a asp-controller="Teklif" asp-action="Index" class="btn btn-sm btn-outline-secondary">Tümü</a>
+            </div>
+            <div class="card-body p-0">
+                @if (!Model.SonTeklifler.Any())
+                {
+                    <div class="text-muted small p-3">Henüz teklif yok.</div>
+                }
+                else
+                {
+                    <ul class="list-group list-group-flush">
+                        @foreach (var t in Model.SonTeklifler)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                                <div>
+                                    <div class="small fw-500">@t.Baslik</div>
+                                    <div class="text-muted" style="font-size:11px">
+                                        <span class="font-monospace">@t.TeklifNo</span> · @t.TeklifTarihi.ToString("dd.MM.yyyy")
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <div class="small fw-500">@t.Tutar.ToString("N0") @t.Para</div>
+                                    @{
+                                        var (tbc, tlbl) = t.Durum switch {
+                                            TeklifDurumu.Onaylandi   => ("success",         "Onaylandı"),
+                                            TeklifDurumu.Reddedildi  => ("danger",          "Reddedildi"),
+                                            TeklifDurumu.Gonderildi  => ("primary",         "Gönderildi"),
+                                            TeklifDurumu.Gorusuluyor => ("info text-dark",  "Görüşülüyor"),
+                                            TeklifDurumu.Iptal       => ("secondary",       "İptal"),
+                                            _                        => ("light text-dark", "Taslak")
+                                        };
+                                    }
+                                    <span class="badge bg-@tbc" style="font-size:10px">@tlbl</span>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mt-2">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-body d-flex gap-2 flex-wrap">
+                <a asp-controller="Musteri" asp-action="Ekle"  class="btn btn-sm btn-outline-primary">+ Yeni Müşteri</a>
+                <a asp-controller="Teklif"  asp-action="Ekle"  class="btn btn-sm btn-outline-primary">+ Yeni Teklif</a>
+                <a asp-controller="Musteri" asp-action="Index" class="btn btn-sm btn-outline-secondary">Müşteri Listesi</a>
+                <a asp-controller="Teklif"  asp-action="Index" class="btn btn-sm btn-outline-secondary">Teklif Listesi</a>
+            </div>
+        </div>
+    </div>
 </div>

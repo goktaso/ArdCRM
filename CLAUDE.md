@@ -89,21 +89,30 @@ ArdCRM/
 - [x] _Layout.cshtml — Türkçe, navigasyon, TempData alert'leri
 - [x] Home/Index.cshtml — dashboard kartları
 - [x] docs/migrations/001_InitialCreate.sql
-- [ ] EF Core migration çalıştır → dotnet ef migrations add InitialCreate
-- [ ] dotnet ef database update → veritabanı oluştur
-- [ ] TeklifController + View'ları
+- [x] Veritabanı oluşturuldu — SSMS ile 001_InitialCreate.sql çalıştırıldı
+- [x] TeklifController + View'ları (Index, Detay, Ekle, Duzenle, _TeklifForm)
+- [x] DataProtection fix — key'ler proje klasöründe tutuluyor
+- [x] launchSettings — Work-Kestrel ve Home-Kestrel profilleri eklendi
+- [x] Tüm modüller test edildi, uygulama çalışıyor
+- [ ] Musteri detay sayfasında gerçek teklif listesi
+- [ ] Dashboard istatistik kartları (müşteri sayısı, açık teklif sayısı, toplam tutar)
+- [ ] Arama / filtreleme (müşteri listesinde)
+- [ ] Unit testler (ArdCRM.Tests)
 
 ## Devam Edilecekler (WIP notu)
 > Her oturum kapanışında buraya not düş, bir sonraki oturumda okuyarak başla.
 
-Son bırakılan yer: Tüm Musteri view'ları tamamlandı, migration SQL yazıldı.
-Sonraki adım:
-1. Dosyaları D:\C#\ArdCRM\ altına kopyala, git push at
-2. appsettings.Work.json oluştur (connection string)
-3. VS'de Work profili seç → IIS Express başlat
-4. SSMS'de 001_InitialCreate.sql çalıştır (veya dotnet ef database update)
-5. Uygulamayı test et: /Musteri → liste, ekle, düzenle, sil
-6. Sonraki oturumda: TeklifController + View'ları
+Son bırakılan yer: Tüm modüller çalışıyor — Müşteri ve Teklif CRUD tamamlandı.
+Çalıştırma komutu (PowerShell):
+  $env:ConnectionStrings__DefaultConnection="Server=OZAY\DATA;Database=ArdCRM;Trusted_Connection=True;TrustServerCertificate=True;"
+  dotnet run --project ArdCRM.Web --launch-profile Work-Kestrel
+  → http://localhost:5050
+
+Sonraki adım seçenekleri:
+1. Musteri detay sayfasında gerçek teklif listesi
+2. Dashboard istatistik kartları
+3. Arama / filtreleme
+4. Unit testler
 
 ## Sık Kullanılan Komutlar
 ```bash
