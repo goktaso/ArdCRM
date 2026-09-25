@@ -142,3 +142,55 @@ Netsis entegrasyonu hazır olduğunda şu adımları izle:
 2. `ArdCRM.Data/Adapters/NetsisAdapter.cs` → implement et
 3. `appsettings` → Netsis connection string ekle (gitignore'da)
 4. DI container'a kaydet → `services.AddScoped<IErpAdapter, NetsisAdapter>()`
+
+<!-- graph-context:start -->
+## Graph Context Router (bağlam seçimi)
+
+> Bu bölüm bağlam sistemini bu dosyaya bağlar. Yukarıdaki bölümler değişmedi;
+> çelişki durumunda **yukarıdaki "Kritik Kurallar" bölümü bağlayıcıdır**.
+
+### Her görevde
+
+1. `context/README.md` dosyasını oku — bağlam haritası / router.
+2. Haritada **Her görevde oku** olarak işaretli dosyaları oku:
+   `context/proje-ozeti.md`, `context/kurallar-ve-sinirlar.md`.
+3. Görevi sınıflandır: feature, bugfix, refactor, review, research, planning,
+   documentation.
+4. Yalnızca görevle ilgili `context/domains/*.md`, `context/kararlar.md`,
+   `context/testing.md` dosyalarını yükle. **`context/` dizininin tamamını okuma.**
+5. Devam eden iş için `tasks/todo.md` içindeki CHECKPOINT'i oku.
+
+### Akış
+
+```text
+Sınıflandır -> ilgili bağlamı seç -> incele/planla -> uygula
+-> build/test doğrulaması -> sonuç
+                        ^          |
+                        +-- hata --+
+```
+
+Hata durumunda tüm projeyi yeniden yorumlama; yalnızca hatanın ilişkili olduğu
+domain, karar veya sözleşme dosyasına dön.
+
+### Dosya sorumlulukları (çift kayıt yapma)
+
+| Konu | Tek doğru yer |
+|---|---|
+| Kritik kurallar, teknoloji, geliştirme geçmişi | `CLAUDE.md` (bu dosya) |
+| Bağlam haritası / hangi dosya ne zaman okunur | `context/README.md` |
+| Mimari + kapsam + mevcut durum özeti | `context/proje-ozeti.md` |
+| Uygulanabilir sınırlar ve onay gerektiren işlemler | `context/kurallar-ve-sinirlar.md` |
+| Gerekçeli teknik kararlar | `context/kararlar.md` |
+| Gerçek build/test komutları ve kabul kriterleri | `context/testing.md` |
+| Domain detayı (müşteri, teklif, ERP, veri) | `context/domains/*.md` |
+| **Güncel WIP / CHECKPOINT** | `tasks/todo.md` |
+| Tekrar edilebilir dersler | `tasks/lessons.md` |
+
+> Not: Yukarıdaki "Devam Edilecekler (WIP notu)" bölümü **geçmiş kayıt** olarak
+> korunur. Yeni oturum notları `tasks/todo.md` içine yazılır.
+
+### Codex uyumu
+
+Codex aynı kuralları kök dizindeki `AGENTS.md` dosyasından okur. İki dosya da
+`context/README.md` router'ına yönlendirir; kural metni tek yerde çoğaltılmaz.
+<!-- graph-context:end -->

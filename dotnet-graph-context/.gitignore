@@ -1,0 +1,8 @@
+# Yerel deneme ciktilari
+_graph-context/
+testroot*/
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
