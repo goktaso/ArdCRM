@@ -23,5 +23,17 @@
     "db": "SQL Server (Windows Authentication)",
     "frontend": "Bootstrap 5 + Vanilla JS",
     "test": "xUnit"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh"
+          }
+        ]
+      }
+    ]
   }
 }
