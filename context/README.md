@@ -20,6 +20,7 @@ anlatır. **Varsayılan olarak `context/` dizininin tamamı okunmaz.**
 | `domains/teklif.md` | Teklif CRUD, teklif no üretimi, durum akışı, tutar/para birimi |
 | `domains/erp-senkron.md` | Netsis/Logo okuma, ERP adapter, önizleme veya aktarım akışı |
 | `domains/veri-ve-migration.md` | Şema değişikliği, EF Core migration, SQL script, DbContext |
+| `domains/karar-motoru.md` | Eşleşme/sınıflandırma/puanlama kararı, JEV veya kural motoru, hassas veri filtresi |
 | `kaynaklar/README.md` | Kullanıcı sağladığı kaynak veya referans inceleniyorsa |
 
 ## Görev sınıflandırma → bağlam seçimi

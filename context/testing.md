@@ -25,9 +25,12 @@ Komutlar Windows geliştirme makinesinde .NET 8 SDK ile çalıştırılır.
 - Test projesi yalnızca `ArdCRM.Business` ve `ArdCRM.Core` projelerine referans verir;
   veritabanı gerektirmez, `IRepository<T>` mock'lanır.
 - Mevcut test dosyaları: `MusteriServiceTests.cs` (13), `TeklifServiceTests.cs` (13),
-  `UnitTest1.cs` (1) → toplam 27 test.
-- Son bilinen sonuç: 2026-06-11, 27/27 yeşil (kaynak: `CLAUDE.md` geliştirme durumu).
-  Bu bağlam dosyası oluşturulurken build/test bu ortamda çalıştırılmadı.
+  `UnitTest1.cs` (1), `KararMotoruTests.cs` (23) → toplam 50 test.
+- Son doğrulama: **2026-09-29 — `dotnet build ArdCRM.sln` 0 hata / 2 uyarı,
+  `dotnet test ArdCRM.Tests/ArdCRM.Tests.csproj` 50/50 yeşil (145 ms).**
+  Komutlar .NET SDK 8.0.131 ile gerçekten çalıştırıldı.
+- Bilinen uyarılar (kararın öncesinden gelir, bu değişiklikle ilgisiz):
+  `NetsisAdapter.cs(115)` CS8601, `Program.cs(7)` CS0105 (yinelenen using).
 
 ## Uygulamayı çalıştırma (manuel doğrulama)
 

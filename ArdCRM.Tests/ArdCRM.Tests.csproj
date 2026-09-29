@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ArdCRM.Business\ArdCRM.Business.csproj" />
     <ProjectReference Include="..\ArdCRM.Core\ArdCRM.Core.csproj" />
+    <ProjectReference Include="..\ArdCRM.Data\ArdCRM.Data.csproj" />
   </ItemGroup>
 
 </Project>

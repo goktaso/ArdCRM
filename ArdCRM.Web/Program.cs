@@ -41,6 +41,10 @@ if (!string.IsNullOrEmpty(netsisConn))
 else
     builder.Services.AddScoped<IErpAdapter, NullErpAdapter>();
 
+// Karar motoru — Jev:ApiAnahtari tanimliysa JEV birincil + kural yedek,
+// yoksa yalnizca kural motoru (bkz. context/domains/karar-motoru.md)
+builder.Services.AddKararMotoru(builder.Configuration);
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

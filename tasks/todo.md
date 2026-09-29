@@ -5,14 +5,19 @@
 
 ## CHECKPOINT
 
-- Hedef: Graph Context bağlam sistemi kuruldu; sıradaki geliştirme hedefi seçilecek.
-- Durum: bekliyor (proje sahibi kararı)
-- Sonraki adım: `context/hedefler.md` içindeki "Aktif hedefler" tablosunu doldur.
-- Engeller: yok
+- Hedef: Karar motoru altyapısı (`IKararMotoru`) kuruldu; JEV değerlendirme aşamasında.
+- Durum: tamamlandı ve doğrulandı — 2026-09-29, build 0 hata, 50/50 test yeşil.
+- Sonraki adım: JEV anahtarı alınırsa `/v1/systemone` şemasını doğrula ve gölge modda
+  kural motoruyla karşılaştır (`context/domains/karar-motoru.md`).
+- Engeller: yok. (JEV ücretsiz kredisi askıda; karar motoru JEV olmadan çalışıyor.)
 
 ## Görevler
 
+- [x] 2026-09-29 — Karar motoru: build + test doğrulaması yapıldı (50/50 yeşil).
 - [ ] `context/hedefler.md` → aktif hedef ve başarı ölçütü doldurulacak.
+- [ ] JEV: `console.typesafe.ai` üzerinden anahtar alınırsa `/v1/systemone` şeması
+      doğrulanacak; gölge modda kural motoruyla karşılaştırılacak (bkz.
+      `context/domains/karar-motoru.md` → "JEV adapter'ını açma adımları").
 - [ ] `context/proje-ozeti.md` → "Son doğrulama" satırı, ilk gerçek build/test
       çalıştırmasından sonra güncellenecek.
 - [ ] Üretim ortamı için `app.UseDeveloperExceptionPage()` ortam ayrımı değerlendirilecek

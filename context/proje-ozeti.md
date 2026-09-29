@@ -36,8 +36,8 @@ pattern ile **salt okuma** yapacak şekilde bağlanabilir.
   - `app.UseDeveloperExceptionPage()` ortamdan bağımsız açıktır (`ArdCRM.Web/Program.cs`).
   - `NetsisAdapter` sütun adları tek bir Netsis kurulumuna göre doğrulanmıştır.
   - EF Core migration'ları ile `docs/migrations/*.sql` script'leri elle senkron tutulur.
-- Son doğrulama: 2026-06-11 — 27 xUnit testi yeşil (kaynak: `CLAUDE.md` geliştirme
-  durumu). Bu bağlam dosyası oluşturulurken build/test bu ortamda **çalıştırılmadı**.
+- Son doğrulama: **2026-09-29 — build 0 hata, 50/50 test yeşil** (.NET SDK 8.0.131 ile
+  çalıştırıldı). Önceki doğrulama 2026-06-11'de 27 testti.
 
 ## Önemli konumlar
 
