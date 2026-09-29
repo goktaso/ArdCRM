@@ -83,6 +83,9 @@ dotnet-graph-context/
 │  ├─ GraphContext.Detection.ps1   <- tespit + siniflandirma
 │  ├─ Initialize-GraphContext.ps1  <- tek proje kurulumu (Sidecar | InPlace)
 │  └─ Install-GraphContextAll.ps1  <- kok klasor tarama, plan + toplu kurulum
+├─ ornek/
+│  └─ SevkiyatKoli/          <- sifirdan kurulmus calisan ornek (3 proje, 21 test)
+│                              kurallar once context/'e yazildi, sonra kodlandi
 └─ docs/
    ├─ graph-engineering.md   <- yontem
    ├─ sidecar-modu.md        <- sifir-dokunus modu

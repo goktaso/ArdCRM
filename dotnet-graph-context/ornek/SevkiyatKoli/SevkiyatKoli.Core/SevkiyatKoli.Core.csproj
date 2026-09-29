@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- Durum degistiren internal metotlari yalnizca Business katmani cagirabilir.
+       Modelin mutasyon API'si disariya acik degildir. -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="SevkiyatKoli.Business" />
+  </ItemGroup>
+
+</Project>
